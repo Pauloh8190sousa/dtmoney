@@ -17,7 +17,11 @@ export function NewTransactionModal({isOpen, onRequestClose} : NewTransactionMod
                className="react-modal-content"
                >
                
-            <button type="button" onClick={onRequestClose} className="react-modal-close">
+            <button 
+            type="button" 
+            onClick={onRequestClose} 
+            className="react-modal-close"
+            >
                 <img src={close} alt="Fechar model" />
             </button>
 
