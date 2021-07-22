@@ -11,7 +11,10 @@ createServer({
           return [{
             id: 1,
             title: "Teste",
-            amount: 300
+            type: "deposit",
+            category: "food",
+            amount: 400,
+            createdAt: new Date()
           }];
         })
     }
