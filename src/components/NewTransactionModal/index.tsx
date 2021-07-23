@@ -1,9 +1,10 @@
-import { FormEvent, useState } from "react";
+import { FormEvent, useState, useContext } from "react";
 import Modal from "react-modal";
 import { Container, TransactionTypeContainer, RadioBox } from "./styles";
 import close from "../../assets/close.svg";
 import incomeimg from "../../assets/income.svg";
 import outcomeimg from "../../assets/outcome.svg";
+import { TransactionsContext } from "../../TransactionsContext";
 
 
 interface NewTransactionModalProps {
@@ -13,10 +14,28 @@ interface NewTransactionModalProps {
 
 export function NewTransactionModal({isOpen, onRequestClose} : NewTransactionModalProps){
 
-    const [type, setType] = useState("deposit");
+    const { createTransaction } = useContext(TransactionsContext);
 
-    function handleCreateNewTransaction(event: FormEvent){
-        
+    const [type, setType] = useState("deposit");
+    const [title, setTitle] = useState("");
+    const [amount, setAmount] = useState(0);
+    const [category, setCategory] = useState("");
+
+    async function handleCreateNewTransaction(event: FormEvent){
+        event.preventDefault();
+
+        await createTransaction({
+            title,
+            amount,
+            category,
+            type
+        });
+
+        setType("deposit");
+        setTitle("");
+        setAmount(0);
+        setCategory("");
+        onRequestClose();
     }
 
     return (
@@ -38,8 +57,17 @@ export function NewTransactionModal({isOpen, onRequestClose} : NewTransactionMod
             <Container onSubmit={handleCreateNewTransaction}>
                 <h2>Cadastrar Transação</h2>
                 
-                <input placeholder="Título" />
-                <input type="number" placeholder="Valor" />
+                <input 
+                    placeholder="Título"
+                    value={title}
+                    onChange={event => setTitle(event.target.value)} 
+                />
+                <input 
+                    type="number" 
+                    placeholder="Valor"
+                    value={amount}
+                    onChange={event => setAmount(Number(event.target.value))} 
+                />
 
                 <TransactionTypeContainer>
                     <RadioBox
@@ -64,7 +92,11 @@ export function NewTransactionModal({isOpen, onRequestClose} : NewTransactionMod
 
                 </TransactionTypeContainer>
 
-                <input placeholder="Categoria" />
+                <input 
+                    placeholder="Categoria"
+                    value={category}
+                    onChange={event => setCategory(event.target.value)} 
+                />
 
                 <button type="submit">
                     Cadastrar
