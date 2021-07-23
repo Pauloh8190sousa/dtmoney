@@ -10,26 +10,7 @@ createServer({
   },
 
   seeds(server){
-    server.db.loadData({
-      transactions: [
-        {
-          id: 1,
-          title: "Freelancer de Sites",
-          type: "deposit",
-          category: "Dev",
-          amount: 6000,
-          createdAt: new Date("2021-02-15 9:00:14")
-        },
-        {
-          id: 2,
-          title: "Alugel",
-          type: "withdraw",
-          category: "Casa",
-          amount: 1000,
-          createdAt: new Date("2021-03-14 11:40:14")
-        },
-      ],
-    });
+    server.db.loadData({});
   },
 
     routes(){
